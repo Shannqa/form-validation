@@ -1,1 +1,42 @@
-// set up
+const body = document.querySelector("body");
+const form = document.createElement("form");
+const inputEmail = document.createElement("input");
+const inputCountry = document.createElement("input");
+const inputZip = document.createElement("input");
+const inputPass = document.createElement("input");
+const inputPassConf = document.createElement("input");
+const button = document.createElement("button");
+const labelEmail = document.createElement("label");
+const labelCountry = document.createElement("label");
+const labelZip = document.createElement("label");
+const labelPass = document.createElement("label");
+const labelPassConf = document.createElement("label");
+
+labelEmail.setAttribute("for", "email");
+inputEmail.setAttribute("id", "email");
+inputEmail.setAttribute("name", "email");
+labelCountry.setAttribute("for", "country");
+inputCountry.setAttribute("id", "country");
+inputCountry.setAttribute("name", "country");
+labelZip.setAttribute("for", "zipcode");
+inputZip.setAttribute("id", "zipcode");
+inputZip.setAttribute("name", "zipcode");
+labelPass.setAttribute("for", "password");
+inputPass.setAttribute("id", "password");
+inputPass.setAttribute("name", "password");
+labelPassConf.setAttribute("for", "password-confirm");
+inputPassConf.setAttribute("id", "password-confirm");
+inputPassConf.setAttribute("name", "password-confirm");
+
+form.appendChild(labelEmail);
+form.appendChild(inputEmail);
+form.appendChild(labelCountry);
+form.appendChild(inputCountry);
+form.appendChild(labelZip);
+form.appendChild(inputZip);
+form.appendChild(labelPass);
+form.appendChild(inputPass);
+form.appendChild(labelPassConf);
+form.appendChild(inputPassConf);
+form.appendChild(button);
+body.appendChild(form);
