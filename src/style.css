@@ -24,11 +24,11 @@ button {
   margin-top: 6px;
 }
 
-.error-inactive {
+input:valid {
   border: 2px green solid;
 }
 
-.error-active {
+input:invalid {
   border: 2px red solid;
 }
 
