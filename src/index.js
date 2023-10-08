@@ -1,3 +1,5 @@
+import css from "./style.css";
+
 const body = document.querySelector("body");
 const form = document.createElement("form");
 const inputEmail = document.createElement("input");
@@ -27,6 +29,13 @@ inputPass.setAttribute("name", "password");
 labelPassConf.setAttribute("for", "password-confirm");
 inputPassConf.setAttribute("id", "password-confirm");
 inputPassConf.setAttribute("name", "password-confirm");
+
+labelEmail.textContent = "Email address:";
+labelCountry.textContent = "Country:";
+labelZip.textContent = "Zip code";
+labelPass.textContent = "Password:";
+labelPassConf.textContent = "Confirm password:";
+button.textContent = "Submit";
 
 form.appendChild(labelEmail);
 form.appendChild(inputEmail);
