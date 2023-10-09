@@ -9,7 +9,7 @@ form {
   margin: 10px;
 }
 
-input {
+input, select {
   width: 200px;
   margin-bottom: 6px;
 }
@@ -24,10 +24,14 @@ button {
   margin-top: 6px;
 }
 
-input.valid {
+.error-inactive {
   border: 2px green solid;
 }
 
-input.invalid {
+.error-active {
   border: 2px red solid;
+}
+
+.invalid {
+  background-color: rgba(255, 0, 0, 0.7);
 }

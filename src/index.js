@@ -1,3 +1,5 @@
+/* eslint-disable no-lonely-if */
+/* eslint-disable prefer-destructuring */
 // eslint-disable-next-line no-unused-vars
 import css from "./style.css";
 
@@ -6,7 +8,7 @@ import css from "./style.css";
 const body = document.querySelector("body");
 const form = document.createElement("form");
 const inputEmail = document.createElement("input");
-const inputCountry = document.createElement("input");
+const selectCountry = document.createElement("select");
 const inputZip = document.createElement("input");
 const inputPass = document.createElement("input");
 const inputPassConf = document.createElement("input");
@@ -21,14 +23,19 @@ const spanCountry = document.createElement("span");
 const spanZip = document.createElement("span");
 const spanPass = document.createElement("span");
 const spanPassConf = document.createElement("span");
+const optionChoose = document.createElement("option");
+const optionPL = document.createElement("option");
+const optionCH = document.createElement("option");
+const optionFR = document.createElement("option");
+const optionNL = document.createElement("option");
 
 labelEmail.setAttribute("for", "email");
 inputEmail.setAttribute("id", "email");
 inputEmail.setAttribute("name", "email");
 inputEmail.setAttribute("type", "email");
 labelCountry.setAttribute("for", "country");
-inputCountry.setAttribute("id", "country");
-inputCountry.setAttribute("name", "country");
+selectCountry.setAttribute("id", "country");
+selectCountry.setAttribute("name", "country");
 labelZip.setAttribute("for", "zipcode");
 inputZip.setAttribute("id", "zipcode");
 inputZip.setAttribute("name", "zipcode");
@@ -38,6 +45,11 @@ inputPass.setAttribute("name", "password");
 labelPassConf.setAttribute("for", "password-confirm");
 inputPassConf.setAttribute("id", "password-confirm");
 inputPassConf.setAttribute("name", "password-confirm");
+optionChoose.setAttribute("value", "choose");
+optionPL.setAttribute("value", "pl");
+optionCH.setAttribute("value", "ch");
+optionFR.setAttribute("value", "fr");
+optionNL.setAttribute("value", "nl");
 
 labelEmail.textContent = "Email address:";
 labelCountry.textContent = "Country:";
@@ -45,12 +57,23 @@ labelZip.textContent = "Zip code";
 labelPass.textContent = "Password:";
 labelPassConf.textContent = "Confirm password:";
 button.textContent = "Submit";
+optionChoose.textContent = "-- Choose a country --";
+optionPL.textContent = "Poland";
+optionCH.textContent = "Switzerland";
+optionFR.textContent = "France";
+optionNL.textContent = "Netherlands";
+
+selectCountry.appendChild(optionChoose);
+selectCountry.appendChild(optionPL);
+selectCountry.appendChild(optionCH);
+selectCountry.appendChild(optionFR);
+selectCountry.appendChild(optionNL);
 
 form.appendChild(labelEmail);
 form.appendChild(inputEmail);
 form.appendChild(spanEmail);
 form.appendChild(labelCountry);
-form.appendChild(inputCountry);
+form.appendChild(selectCountry);
 form.appendChild(spanCountry);
 form.appendChild(labelZip);
 form.appendChild(inputZip);
@@ -116,37 +139,59 @@ function checkFormValidity() {
     // country - required
     // choose an option: poland, switzerland, france, netherlands
 
-    const countryValid = inputCountry.value.length !== 0;
-    if (!countryValid) {
+    if (selectCountry.value === "choose") {
       spanCountry.className = "invalid";
-      spanEmail.textContent = "This field is required.";
-      inputCountry.className = "error-active";
+      spanCountry.textContent = "This field is required.";
+      selectCountry.className = "error-active";
     } else {
       spanCountry.className = "valid";
-      spanEmail.textContent = "";
-      inputCountry.className = "error-inactive";
+      spanCountry.textContent = "";
+      selectCountry.className = "error-inactive";
     }
 
-    // zip code - not required, pattern
-    // pl 00-000
-    // ch (ch-)0000
-    // fr (f-)00000
-    // nl (nl-)0000aa - 2 letters except SA, sd or ss
+    // zip code - required, pattern
+
+    const zipValid = inputZip.value.length;
+
     const zipPatterns = {
-      pl: ["^\\d{2}-\\d{3}$", ""],
-      ch: ["^(CH-)?\\d{4}$", ""],
-      fr: ["^(F-)?\\d{5}$", ""],
-      nl: ["^(NL-)?\\d{4}\\s*([A-RT-Z][A-Z]|S[BCE-RT-Z])$", ""],
+      choose: ["", ""],
+      pl: [
+        "^\\d{2}-\\d{3}$",
+        "Poland's zipcodes must follow this pattern: 2 digits, followed by a hyphen (-), followed by 3 digits, e.g. 12-345.",
+      ],
+      ch: [
+        "^(CH-)?\\d{4}$",
+        "Switzerland's zipcodes must follow this pattern: optional 'CH-' and 4 digits, e.g. CH-1234 or 1234.",
+      ],
+      fr: [
+        "^(F-)?\\d{5}$",
+        "France's zipcodes must follow this pattern: optional 'FR-', followed by 5 digits, e.g. FR-12345 or 12345.",
+      ],
+      nl: [
+        "^(NL-)?\\d{4}\\s*([A-RT-Z][A-Z]|S[BCE-RT-Z])$",
+        "Netherland's zipcodes must follow this pattern: 4 digits followed by 2 letters except SA, SD and SS.",
+      ],
     };
     // eslint-disable-next-line no-unused-vars
-    const countryCurrent = inputCountry.value;
 
-    const zipConstr = new RegExp(zipPatterns.countryCurrent[0], "");
+    const countryCurrent = selectCountry.value;
 
-    if (zipConstr.test(inputZip.value)) {
-      inputZip.setCustomValidity("");
+    const zipConstr = new RegExp(zipPatterns[countryCurrent][0], "");
+
+    if (!zipValid) {
+      spanZip.textContent = "This field is required";
+      spanZip.className = "invalid";
+      inputZip.className = "error-active";
     } else {
-      inputZip.setCustomValidity(zipPatterns.countryCurrent[0]);
+      if (zipConstr.test(inputZip.value)) {
+        spanZip.textContent = "";
+        spanZip.className = "valid";
+        inputZip.className = "error-inactive";
+      } else {
+        spanZip.textContent = zipPatterns[countryCurrent][1];
+        spanZip.className = "invalid";
+        inputZip.className = "error-active";
+      }
     }
   });
 }
