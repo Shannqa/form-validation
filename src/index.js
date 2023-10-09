@@ -153,10 +153,11 @@ function checkFormValidity() {
     inputZip.setCustomValidity("");
   } else {
     inputZip.setCustomValidity(zipPatterns.[inputCountry.value][0]);
+    
 
   }  
   
-  
+//  test test
 });
 
   
