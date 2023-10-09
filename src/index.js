@@ -93,6 +93,18 @@ form.addEventListener("submit", (event) => {
   event.preventDefault();
 });
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+inputEmail.addEventListener("input", (event) => {
+  if (inputEmail.validity.typeMismatch) {
+    inputEmail.setCustomValidity("Enter a valid email address!");
+  } else {
+    inputEmail.setCustomValidity("");
+  }
+});
+=======
+>>>>>>> ec29dc4f650c88a5bb9c502930f2456554da03e7
   // on loading page, check of its empty or valid
   window.addEventListener("load", () => {
     const emailValid =
@@ -198,3 +210,7 @@ function checkFormValidity() {
 
 checkEmailValidity();
 checkFormValidity();
+<<<<<<< HEAD
+=======
+>>>>>>> d58207d (Country/zipcode validation)
+>>>>>>> ec29dc4f650c88a5bb9c502930f2456554da03e7

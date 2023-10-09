@@ -7,7 +7,7 @@
   \**********************/
 /***/ (() => {
 
-throw new Error("Module parse failed: Unexpected token (115:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n|     }\n|   });\n> }\n| \n| function checkFormValidity() {");
+throw new Error("Module parse failed: Unexpected token (96:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| });\n| \n> <<<<<<< HEAD\n| =======\n| <<<<<<< HEAD");
 
 /***/ })
 
