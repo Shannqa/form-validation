@@ -9,7 +9,11 @@
 
 throw new Error("Module parse failed: Unexpected token (96:0)\nYou may need an appropriate loader to handle this file type, currently no loaders are configured to process this file. See https://webpack.js.org/concepts#loaders\n| });\n| \n> <<<<<<< HEAD\n| inputEmail.addEventListener(\"input\", (event) => {\n|   if (inputEmail.validity.typeMismatch) {");
 
-/***/ })
+form {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}
 
 /******/ 	});
 /************************************************************************/
