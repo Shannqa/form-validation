@@ -24,10 +24,10 @@ button {
   margin-top: 6px;
 }
 
-input:valid {
+input.valid {
   border: 2px green solid;
 }
 
-input:invalid {
+input.invalid {
   border: 2px red solid;
 }

@@ -24,7 +24,6 @@ const spanPassConf = document.createElement("span");
 labelEmail.setAttribute("for", "email");
 inputEmail.setAttribute("id", "email");
 inputEmail.setAttribute("name", "email");
-inputEmail.setAttribute("type", "email");
 labelCountry.setAttribute("for", "country");
 inputCountry.setAttribute("id", "country");
 inputCountry.setAttribute("name", "country");
@@ -63,16 +62,102 @@ form.appendChild(spanPassConf);
 form.appendChild(button);
 body.appendChild(form);
 
-// validity
 
-form.addEventListener("submit", (event) => {
+// email
+
+function checkEmailValidity() {
+
+  const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  
+  // on loading page, check of its empty or valid
+  window.addEventListener("load", () => {
+  const emailValid = inputEmail.value.length === 0 || emailRegExp.test(inputEmail.value);
+  inputEmail.className = emailValid ? "valid" : "invalid";
+  });
+  // check validity on input
+  inputEmail.addEventListener("input", () => {
+    const emailValid = inputEmail.value.length === 0 || emailRegExp.test(inputEmail.value);
+  
+    if (emailValid) {
+      inputEmail.className = "valid";
+      spanEmail.textContent = "";
+      inputEmail.className = "error-inactive";
+
+    } else {
+      inputEmail.className = "invalid";
+    }
+  });
+}
+
+
+
+function checkFormValidity() {
+  //checking the form on submit
+// check if thats how you add empty attrs
+  form.setAttribute("novalidate", true);
+  form.addEventListener("submit", (event) => {
   event.preventDefault();
+  
+    //email
+    const emailValid = inputEmail.value.length === 0 || emailRegExp.test(inputEmail.value);
+    if (!emailValid) {
+      spanEmail.className = "invalid";
+      spanEmail.textContent = "Please enter a valid email address."
+      inputEmail.className = "error-active"
+    } else {
+      inputEmail.className = "error-inactive";
+            inputEmail.className = "valid";
+      spanEmail.textContent = "";
+    }
+
+  // country - required
+  // choose an option: poland, switzerland, france, netherlands
+  
+  const countryValid = inputCountry.value.length !== 0;
+  if (!countryValid) {
+    spanCountry.className = "invalid";
+      spanEmail.textContent = "This field is required.";
+    inputCountry.className = "error-active";
+  } else {
+    spanCountry.className = "valid";
+      spanEmail.textContent = "";
+    inputCountry.className = "error-inactive";
+  }
+  
+  // zip code - not required, pattern
+  // pl 00-000
+  // ch (ch-)0000
+  // fr (f-)00000
+  // nl (nl-)0000aa - 2 letters except SA, sd or ss
+  const zipPatterns = {
+    pl: [
+      "^\\d{2}-\\d{3}$",
+      ""
+      ],
+    ch: [
+      "^(CH-)?\\d{4}$",
+      ""
+      ],
+    fr: [
+      "^(F-)?\\d{5}$",
+      ""
+      ],
+    nl: [
+      "^(NL-)?\\d{4}\\s*([A-RT-Z][A-Z]|S[BCE-RT-Z])$",
+      ""
+      ];
+      
+  const zipConstr = new RegExp(zipPatterns.[inputCountry.value][0], "");    
+  
+  if (zipConstr.test(inputZip.value)) {
+    inputZip.setCustomValidity("");
+  } else {
+    inputZip.setCustomValidity(zipPatterns.[inputCountry.value][0]);
+
+  }  
+  
+  
 });
 
-inputEmail.addEventListener("input", (event) => {
-  if (inputEmail.validity.typeMismatch) {
-    inputEmail.setCustomValidity("Enter a valid email address!");
-  } else {
-    inputEmail.setCustomValidity("");
-  }
-});
+  
+}
